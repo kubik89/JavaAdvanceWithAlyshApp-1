@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Person</title>
+</head>
+<body>
+<!--th:action - куди форма буде передавати свої дані
+th:object="${person} - форма буде звертатися на person який прийде з нового обєкта який створюємо в контроллері
+th:field - поле, що повинне міститися в обєкта person, id="myId" - довільна для label
+-->
+    <form th:method="POST" th:action="@{/people}" th:object="${person}">
+        <label for="myId">Enter name: </label>
+        <input type="text" th:field="*{name}" id="myId"/>
+        <br>
+        <input type="submit" value="Create user"/>
+    </form>
+</body>
+</html>

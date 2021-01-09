@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>People</title>
+</head>
+<body>
+<!-- div -  з допомогою th:each ми ітеруємо people (приходить із PersonController)-->
+<!-- <a> - для кожного із people створимо посилання-->
+<!--        - за допомогою @ формується саме посилання у вигляді /people/id ,
+               - id - прокинеться автоматично із методу getId()-->
+<a href="/people/new">Create new</a>
+    <div th:each="person : ${people}">
+        <a th:href="@{/people/{id}(id=${person.getId()})}"
+           th:text="${person.getName()}"
+        >user</a>
+<!--           th:text="${person.getName()}"-->
+    </div>
+</body>
+</html>
