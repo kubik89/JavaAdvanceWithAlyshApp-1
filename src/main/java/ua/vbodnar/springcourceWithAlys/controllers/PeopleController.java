@@ -1,11 +1,13 @@
 package ua.vbodnar.springcourceWithAlys.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.vbodnar.springcourceWithAlys.dao.PersonDAO;
 import ua.vbodnar.springcourceWithAlys.models.Person;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
@@ -48,7 +50,13 @@ public class PeopleController {
 
     @PostMapping
     // з допомогою ModelAttribute в обєкт person ми отримаємо людину, яка прийде із форми вище по ключу "person"
-    public String create(@ModelAttribute("person") Person person) {
+    public String create(@ModelAttribute("person")
+                         @Valid Person person, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("error");
+            return "people/new";
+        }
+
         personDAO.save(person);
         return "redirect:/people";
     }
@@ -62,7 +70,11 @@ public class PeopleController {
     }
 // отримуємо значення із html форми по id і тут змінюємо це значення на нове методом
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "people/edit";
+        }
         personDAO.update(id, person);
         return "redirect:/people";
     }
