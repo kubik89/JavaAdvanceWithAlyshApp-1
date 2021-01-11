@@ -10,11 +10,15 @@
 <!--        - за допомогою @ формується саме посилання у вигляді /people/id ,
                - id - прокинеться автоматично із методу getId()-->
 <a href="/people/new">Create new</a>
-    <div th:each="person : ${people}">
-        <a th:href="@{/people/{id}(id=${person.getId()})}"
-           th:text="${person.getName()}"
-        >user</a>
-<!--           th:text="${person.getName()}"-->
-    </div>
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.getId()})}"
+       th:text="${person.getName()}"
+    >user</a>
+</div>
+<br>
+<hr/>
+
+<a href="/people/new">Create new person</a>
+
 </body>
 </html>

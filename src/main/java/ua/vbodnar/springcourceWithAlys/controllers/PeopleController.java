@@ -52,4 +52,24 @@ public class PeopleController {
         personDAO.save(person);
         return "redirect:/people";
     }
+
+// @PathVariable витягне значення id що в посиланні @GetMapping{id}, і покладемо це значення в int id
+// використовуємо метод show бо хочемо, щоб в наші поля попали значення, які вже були занесені, для зручності
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("person", personDAO.show(id));
+        return "people/edit";
+    }
+// отримуємо значення із html форми по id і тут змінюємо це значення на нове методом
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("person") Person person, @PathVariable("id") int id) {
+        personDAO.update(id, person);
+        return "redirect:/people";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete (@PathVariable("id") int id) {
+        personDAO.delete(id);
+        return "redirect:/people";
+    }
  }
