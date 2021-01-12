@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Person</title>
+</head>
+<body>
+<!--th:action - куди форма буде передавати свої дані
+th:object="${person} - форма буде звертатися на person який прийде з нового обєкта який створюємо в контроллері
+th:field - поле, що повинне міститися в обєкта person, id="myId" - довільна для label
+-->
+    <form th:method="POST" th:action="@{/people}" th:object="${person}">
+        <label for="myId">Enter name: </label>
+        <input type="text" th:field="*{name}" id="myId"/>
+<!-- fields.hasErrors('name') - якщо поле ФОРМИ має помилку то div покажеться, не буде скритим і в цей div
+за допомогою thymeleaf в назву тегу буде вставлятися текст помилки, який ми описали в полі класу
+th:errors="*{name} - саме помилка поля name з класу буде підтягуватися сюди для відображення
+помилки тут повязані із валідністю що в класі обєкта Person-->
+        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+
+        <label for="myAge">Enter age: </label>
+        <input type="text" th:field="*{age}" id="myAge"/>
+        <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
+
+        <label for="myEmail">Enter email: </label>
+        <input type="text" th:field="*{email}" id="myEmail"/>
+        <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+
+        <input type="submit" value="Create user"/>
+    </form>
+</body>
+</html>

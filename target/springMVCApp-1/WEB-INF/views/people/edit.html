@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit person</title>
+</head>
+<body>
+<h3 align="center">Edit person: </h3>
+<!--thymeleaf сам створить сховане поле із значенням Patch(бо HTML сам не підтримує Patch)
+і далі ми зможемо прочитати це скрите поле через Spring фільтрувавши це поле (метод registerHiddenFieldFilter в config/MySpringMvcDispatcherServletInitializer)
+ ми отримуємо person з контроллера і в інпуті показуємо його поле name (таке ж поле в моделі обєкта Person)-->
+
+<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
+    <input type="text" th:field="*{name}" id="myId"/>
+    <label for="myId">Enter name: </label>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <br>
+    <input type="number" th:field="*{age}" id="myAge"/>
+    <label for="myAge">Enter age: </label>
+    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name error</div>
+    <br>
+    <input type="email" th:field="*{email}" id="myEmail"/>
+    <label for="myEmail">Enter email: </label>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</div>
+    <br>
+    <br>
+    <input type="submit" value="Update user"/>
+</form>
+</body>
+</html>
